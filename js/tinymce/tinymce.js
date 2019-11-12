@@ -4237,6 +4237,10 @@
         y -= offsetParent.scrollTop || 0;
         offsetParent = offsetParent.parentNode;
       }
+      if (rootElm === body && elm.getBoundingClientRect) {
+        pos = elm.getBoundingClientRect();
+        x = pos.left + (doc.documentElement.scrollLeft || body.scrollLeft) - doc.documentElement.clientLeft;
+      }
       y += getTableCaptionDeltaY(Element$$1.fromDom(elm));
     }
     return {
