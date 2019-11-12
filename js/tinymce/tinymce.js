@@ -10489,6 +10489,15 @@ define(
             y -= offsetParent.scrollTop || 0;
             offsetParent = offsetParent.parentNode;
           }
+
+          if (rootElm === body && elm.getBoundingClientRect) {
+            pos = elm.getBoundingClientRect();
+            rootElm = self.boxModel ? doc.documentElement : body;
+
+            // Add scroll offsets from documentElement or body since IE with the wrong box model will use d.body and so do WebKit
+            // Also remove the body/documentelement clientLeft on IE 6, 7 since they offset the position
+            x = pos.left + (doc.documentElement.scrollLeft || body.scrollLeft) - rootElm.clientLeft;
+          }
         }
 
         return { x: x, y: y };
